@@ -166,10 +166,19 @@ function save() {
                 }
             })
         else {
-            updateCheckList(selectedItem).then(({data: {id, date, name: title}, status}) => {
+            updateCheckList(selectedItem)
+                .then(({data: {id, date, name: title}, status}) => {
                 if (status === 200) {
                     load()
                     eraseForm();
+                }
+            })
+                .catch(({response}) => {
+                const {data, status} = response
+
+                if (data && data.errors) {
+                    const arraysOfErrors = Object.values(data.errors);
+                    errors.value = arraysOfErrors.flat();
                 }
             })
         }
@@ -317,7 +326,7 @@ onMounted(async () => {
 
                         </div>
                         <div class="mt-6 flex items-center justify-end gap-x-6">
-                            <button class="text-sm font-semibold leading-6 text-gray-900" type="button">Cancelar
+                            <button @click="createNewCheckList = false" class="text-sm font-semibold leading-6 text-gray-900" type="button">Cancelar
                             </button>
                             <button
                                 :disabled="!validateForm"
