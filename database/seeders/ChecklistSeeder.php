@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Checklist;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class ChecklistSeeder extends Seeder
@@ -12,6 +13,7 @@ class ChecklistSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+
+        Checklist::factory(20)->create();
     }
 }

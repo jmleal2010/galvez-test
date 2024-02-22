@@ -13,7 +13,7 @@ class ChecklistRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return Auth::hasUser();
+        return true;
     }
 
     /**
@@ -26,6 +26,19 @@ class ChecklistRequest extends FormRequest
         return [
             'name' => 'required|string|min:5',
             'description' => 'nullable|string',
+            'tasks' => 'required|array|min:1',
+            'date' => 'required|date_format:Y-m-d'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'El nombre es requerido.',
+            'name.min' => 'El nombre no cumple con el formato .',
+            'tasks.required' => 'Las tareas son obligatorias, debe adjuntar al menos una.',
+            'tasks.array' => 'El formato de las tareas no es correcto',
+            'date.format' => 'El formato de la fecha  no es correcto',
         ];
     }
 }

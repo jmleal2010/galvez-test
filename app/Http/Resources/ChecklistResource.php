@@ -16,10 +16,12 @@ class ChecklistResource extends JsonResource
     {
 
         return [
-            'id'=>$request->id,
-            'name'=>$request->name,
-            'description'=>$request->description,
-            'status'=>$request->status
+            'id'=>$this->id,
+            'title'=>$this->name,
+            'date'=>$this->date,
+            'display'=>'background',
+            'tasks'=>$this->tasks,
+            'description'=>$this->description
         ];
     }
 }

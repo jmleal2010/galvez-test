@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
-            $table->id();
-            $table->string('name', 255)->nullable(false);
-            $table->text('description')->nullable(true);
-            $table->foreign('checklist_id')->references('id')->on('checklist');
-            $table->timestamps();
+        Schema::table('checklists', function (Blueprint $table) {
+            $table->date('date')->nullable(true);
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        Schema::table('checklists', function (Blueprint $table) {
+            $table->removeColumn('date');
+        });
     }
 };

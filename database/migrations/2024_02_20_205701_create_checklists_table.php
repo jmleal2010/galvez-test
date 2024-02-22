@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', '255')->nullable(false);
             $table->text('description')->nullable(true);
+            $table->json('tasks');
             $table->timestamps();
         });
     }

@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->post('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix' => 'auth'], function () {
+    Route::post('/login', [UserController::class, 'login'])->name('login');
+    Route::post('/register', [UserController::class, 'register']);
+    Route::post('/logout', [UserController::class, 'logout']);
+});
+
+Route::prefix('checklist')
+    ->group(function () {
+        Route::get('/', [ChecklistController::class, 'index']);
+        Route::post('/', [ChecklistController::class, 'store']);
+        Route::get('/identify', [ChecklistController::class, 'identify']);
+        Route::put('/', [ChecklistController::class, 'update']);
+        Route::delete('/', [ChecklistController::class,'destroy']);
+    });

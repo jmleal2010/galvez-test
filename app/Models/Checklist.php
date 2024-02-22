@@ -9,12 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 class Checklist extends Model
 {
     use HasFactory;
-    use HasUuids;
 
-    protected $fillable=['name', 'description','status'];
+    protected $fillable=['name', 'description','date', 'tasks'];
+    protected $casts = [
+        'tasks' => 'array',
+    ];
 
-    public function Tasks()
-    {
-        $this->hasMany(Task::class);
-    }
 }

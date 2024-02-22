@@ -7,6 +7,7 @@ use App\Http\Resources\ChecklistResource;
 use App\Models\Checklist;
 use App\Models\Task;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ChecklistController extends Controller
@@ -16,8 +17,9 @@ class ChecklistController extends Controller
      */
     public function index(): JsonResponse
     {
-        $tasks = Checklist::all();
-        return response()->json(ChecklistResource::collection($tasks));
+        $checklists = Checklist::all();
+
+        return response()->json(ChecklistResource::collection($checklists));
     }
 
 
@@ -45,15 +47,16 @@ class ChecklistController extends Controller
 
         $checklist = Checklist::findOrFail($checklist->id);
 
-        return response()->json(new ChecklistResource($checklist));
+        return response()->json(new ChecklistResource($checklist), 200);
 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ChecklistRequest $request, Checklist $checklist): JsonResponse
+    public function update(ChecklistRequest $request): JsonResponse
     {
+        $checklist =  Checklist::findOrFail($request->id);
         $validData = $request->validated();
 
       if($validData) {
@@ -66,10 +69,12 @@ class ChecklistController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Checklist $checklist): JsonResponse
+    public function destroy(Request $request): JsonResponse
     {
+        $id = $request->id;
+        $checklist = Checklist::findOrFail($id);
         $checklist->deleteOrFail();
 
-        return response()->json('No se ha podido eliminar el checklist', 500);
+        return response()->json('Se ha eliminado correctamente', 200);
     }
 }

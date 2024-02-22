@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/{any}', function () {
+    return view('welcome'); // Esto es un ejemplo, asegúrate de usar el nombre correcto de tu vista
+})->where('any', '.*');
