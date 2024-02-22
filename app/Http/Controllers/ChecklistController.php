@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 class ChecklistController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Muestra una lista de recursos de checklist
      */
     public function index(): JsonResponse
     {
@@ -24,7 +24,8 @@ class ChecklistController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * @param ChecklistRequest $request
+     * @return JsonResponse
      */
     public function store(ChecklistRequest $request): JsonResponse
     {
@@ -39,8 +40,10 @@ class ChecklistController extends Controller
         return response()->json($data = "", 400);
     }
 
+
     /**
-     * Display the specified resource.
+     * @param Checklist $checklist
+     * @return JsonResponse
      */
     public function identify(Checklist $checklist): JsonResponse
     {
@@ -51,8 +54,10 @@ class ChecklistController extends Controller
 
     }
 
+
     /**
-     * Update the specified resource in storage.
+     * @param ChecklistRequest $request
+     * @return JsonResponse
      */
     public function update(ChecklistRequest $request): JsonResponse
     {
@@ -67,7 +72,8 @@ class ChecklistController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @param Request $request
+     * @return JsonResponse
      */
     public function destroy(Request $request): JsonResponse
     {

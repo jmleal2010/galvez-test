@@ -46,7 +46,6 @@ class UserController extends Controller
     /**
      * @param UserRequest $request
      * @return JsonResponse
-     * @throws ValidationException
      */
     public function register(UserRequest $request): JsonResponse
     {

@@ -52,10 +52,15 @@ let selectedItem = reactive({
 });
 const checklistStore = useChecklistStore();
 
+/**
+ * @param {Array<UnwrapRefSimple<*>>} events
+ */
 function handleEvents(events) {
     currentEvents.value = events
 }
-
+/**
+ * Permite obtener el checklist seleccionado del calendario y determinar si se cargan los datos para editarlo o crearlo
+ * */
 function getItemByDate(initialDate) {
 
     const item = list.find(({date}) => date === initialDate)
@@ -76,6 +81,10 @@ function getItemByDate(initialDate) {
 
 }
 
+/**
+ * Es el manejador de eventos del calendario que se dispara al hacer click en un dia
+ * @param selectInfo
+ */
 function handleDateSelect(selectInfo) {
 
     let calendarApi = selectInfo.view.calendar
@@ -86,6 +95,10 @@ function handleDateSelect(selectInfo) {
     calendarApi.unselect()
 }
 
+/**
+ * Permite annadir una nueva tarea al checklis seleccionado
+ * @param e
+ */
 function addNewTask(e) {
     e.preventDefault()
 
@@ -105,20 +118,34 @@ function addNewTask(e) {
 
 }
 
+/**
+ * Es util par cuando necesitamos activar o desactivar una actividad
+ * @param index
+ */
 function toggleActive(index) {
     selectedItem.tasks[index].active = !selectedItem.tasks[index].active
 }
 
+/**
+ * Nos permite eliminar una actividad o tarea de un checklist, se interpreta que esta eliminada porque queda tachada, esta accion es irreversible
+ * @param index
+ */
 function removeTask(index) {
     selectedItem.tasks[index].removed = true
 }
 
+/**
+ * Permite esconder el campo de texto de la nueva tarea , esto nos permite borrar el contenido anterior y cada vez que interactuemos con el campo estará como nuevo
+ */
 function hideNewTaskInput() {
     showNewTask.value = false
     newTask.value = ''
     isValidTask.value = true;
 }
 
+/**
+ * Permite borrar un checklist previamente seleccionado
+ */
 function deleteChecklist() {
     removeChecklist(selectedItem.id).then(({status}) => {
         if (status === 200) {
@@ -129,6 +156,10 @@ function deleteChecklist() {
     })
 }
 
+/**
+ * Permite validar el formulario antes de hacer la llamada para salvar el checklist en cuestion
+ * @returns {boolean}
+ */
 const validateForm = () => {
     isValidTitle.value = !!selectedItem.title.trim();
     isValidDate.value = /^\d{4}-\d{2}-\d{2}$/.test(selectedItem.date);
@@ -139,6 +170,9 @@ const validateForm = () => {
 
 };
 
+/**
+ * Permite limpiar un formulario una vez esta guardado o actualizado, reseteando sus valors a default
+ */
 function eraseForm() {
     selectedItem.id = ''
     selectedItem.title = ''
@@ -148,6 +182,9 @@ function eraseForm() {
     errors.value = [];
 }
 
+/**
+ * Permite guardar el formulario, segun el checklist seleccionado, guardará o actualizará teniendo en cuenta como factor de identificacion al id
+ */
 function save() {
     if (validateForm()) {
         if (!selectedItem.id) saveChecklist(selectedItem)
@@ -185,6 +222,10 @@ function save() {
     }
 }
 
+/**
+ * Carga la configuracion inicial, es decir realiza un fetch a todos los checlist del anno
+ * @returns {Promise<void>}
+ */
 async function load() {
     const startDate = moment().startOf('month').format('YYY-MM-DD')
     const endDate = moment().endOf('month').format('YYY-MM-DD')
@@ -360,52 +401,5 @@ onMounted(async () => {
 </template>
 
 <style lang='css' scoped>
-
-h2 {
-    margin: 0;
-    font-size: 16px;
-}
-
-ul {
-    margin: 0;
-    padding: 0 0 0 1.5em;
-}
-
-li {
-    margin: 1.5em 0;
-    padding: 0;
-}
-
-b { /* used for event dates/times */
-    margin-right: 3px;
-}
-
-.demo-app {
-    display: flex;
-    min-height: 100%;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-}
-
-.demo-app-sidebar {
-    width: 300px;
-    line-height: 1.5;
-    background: #eaf9ff;
-    border-right: 1px solid #d3e2e8;
-}
-
-.demo-app-sidebar-section {
-    padding: 2em;
-}
-
-.demo-app-main {
-    flex-grow: 1;
-    padding: 3em;
-}
-
-.fc { /* the calendar root */
-    max-width: 1100px;
-    margin: 0 auto;
-}
 
 </style>

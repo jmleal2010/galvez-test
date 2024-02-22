@@ -1,6 +1,10 @@
 import {defineStore} from 'pinia'
 import {computed, reactive} from "vue";
 
+/**
+ * Permite manejar el estado de los checklist a lo largo de la aplicacion
+ * @type {StoreDefinition<"checklist", _ExtractStateFromSetupStore<{removeTask: function(*): void, checklist: [], getCheckList: ComputedRef<Array<UnwrapRefSimple<*>>>, fill: function(*): void, getSelectedItem: ComputedRef<UnwrapNestedRefs<{}>>, setItem: function(*): void, addTask: function(*): void}>, _ExtractGettersFromSetupStore<{removeTask: function(*): void, checklist: [], getCheckList: ComputedRef<Array<UnwrapRefSimple<*>>>, fill: function(*): void, getSelectedItem: ComputedRef<UnwrapNestedRefs<{}>>, setItem: function(*): void, addTask: function(*): void}>, _ExtractActionsFromSetupStore<{removeTask: function(*): void, checklist: [], getCheckList: ComputedRef<Array<UnwrapRefSimple<*>>>, fill: function(*): void, getSelectedItem: ComputedRef<UnwrapNestedRefs<{}>>, setItem: function(*): void, addTask: function(*): void}>>}
+ */
 
 export const useChecklistStore = defineStore('checklist', () => {
     let checklist = reactive([])

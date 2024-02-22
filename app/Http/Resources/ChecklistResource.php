@@ -10,7 +10,7 @@ class ChecklistResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @return array<string, mixed>
+     * @return array{id: mixed, title: mixed, date: mixed, display: string, tasks: mixed, description: mixed}
      */
     public function toArray(Request $request): array
     {

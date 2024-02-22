@@ -31,7 +31,10 @@ class ChecklistRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    /**
+     * @return array{name.required: string, name.min: string, tasks.required: string, tasks.array: string, date.format: string}
+     */
+    public function messages(): array
     {
         return [
             'name.required' => 'El nombre es requerido.',
